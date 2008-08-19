@@ -1,0 +1,41 @@
+*RltvNmbr.txt*	Relative Numbers			Aug 18, 2008
+
+Author:  Charles E. Campbell, Jr.  <NdrOchip@ScampbellPfamily.AbizM>
+	  (remove NOSPAM from Campbell's email first)
+Copyright: (c) 2008 by Charles E. Campbell, Jr.		*RltvNmbr-copyright*
+           The VIM LICENSE applies to RltvNmbr.vim and RltvNmbr.txt
+           (see |copyright|) except use "RltvNmbr instead of "Vim".
+	   NO WARRANTY, EXPRESS OR IMPLIED.  USE AT-YOUR-OWN-RISK.
+
+==============================================================================
+1. Contents				*RltvNmbr* *RltvNmbr-contents* {{{1
+
+	1. Contents......................................: |RltvNmbr-contents|
+	2. Relative Numbering Manual.....................: |RltvNmbr-manual|
+	3. Relative Numbering History....................: |RltvNmbr-history|
+
+==============================================================================
+2. Relative Numbering Manual				*RltvNmbr-manual* {{{1
+
+The Relative Numbering plugin provides just one command: >
+   		:RltvNmbr[!]
+The :RltvNmbr command enables relative numbering.
+The :RltvNmbr! command disables relative numbering.
+
+To use this plugin your vim must have been compiled with the "huge" feature
+set (so as to have +signs in the :version listing).  Typically that means >
+
+This plugin was inspired by the relative-numbering patch mentioned on the
+vim-dev mailing list.
+
+==============================================================================
+3. Relative Numbering History				*RltvNmbr-history* {{{1
+	1: Aug 18, 2008		* Initial release
+	   Aug 18, 2008		* Fixed some bugs associated with folding
+	   Aug 18, 2008		* Changes in colorscheme was clearing the
+	   			  highlighting.  Highlighting now restored.
+
+==============================================================================
+Modelines: {{{1
+vim:tw=78:ts=8:ft=help:fdm=marker:
+

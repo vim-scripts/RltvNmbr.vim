@@ -1,0 +1,22 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=2351
+
+The RltvNmbr plugin uses the signs feature to display the line numbering relative to the current line.  A number of commands take [count] arguments for which this is helpful.
+
+:RltvNmbr
+    This command turns relative line numbering on.
+
+:RltvNmbr!
+    This command turns relative line numbering off.
+
+CAVEAT:
+    Your vim must have the signs feature compiled in!  This typically means that your vim has been configured and compiled to be "huge":
+        configure --with-features=huge
+        compile
+        install
+
+	To check this:
+		:echo has("signs")
+	should show a "1".  Alternatively, look at the output of  :version  and see if you have +signs listed.
+
+(alpha/beta version available at http://mysite.verizon.net/astronaut/vim/index.html#RLTVNMBR)
+
