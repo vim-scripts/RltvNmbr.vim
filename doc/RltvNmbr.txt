@@ -1,4 +1,4 @@
-*RltvNmbr.txt*	Relative Numbers			Aug 18, 2008
+*RltvNmbr.txt*	Relative Numbers			Aug 19, 2008
 
 Author:  Charles E. Campbell, Jr.  <NdrOchip@ScampbellPfamily.AbizM>
 	  (remove NOSPAM from Campbell's email first)
@@ -26,10 +26,21 @@ To use this plugin your vim must have been compiled with the "huge" feature
 set (so as to have +signs in the :version listing).  Typically that means >
 
 This plugin was inspired by the relative-numbering patch mentioned on the
-vim-dev mailing list.
+vim-dev mailing list, written by Markus Heidelberg.  You can find his patch at
+
+http://groups.google.com/group/vim_dev/attach/497ba7fec067ed99/vim-7.2-relativenumber.patch?part=2
+
 
 ==============================================================================
 3. Relative Numbering History				*RltvNmbr-history* {{{1
+   	2: Aug 19, 2008		* included :RN command which toggles
+	   			  relative numbering
+				* included some more autocmds to update
+				  relative numbering.
+				* made gvim's version use italic numbers
+				* :RN was toggling globally; now its done
+				  on a buffer-by-buffer basis.
+				* Included DrChip menu support for gvim use
 	1: Aug 18, 2008		* Initial release
 	   Aug 18, 2008		* Fixed some bugs associated with folding
 	   Aug 18, 2008		* Changes in colorscheme was clearing the

@@ -1,15 +1,20 @@
 " RltvNmbr.vim
 "   Author: Charles E. Campbell, Jr.
-"   Date:   Aug 18, 2008
-"   Version: 1c	ASTRO-ONLY
+"   Date:   Aug 20, 2008
+"   Version: 2
+"   GetLatestVimScripts: 2351 1 :AutoInstall: RltvNmbr.vim
 " ---------------------------------------------------------------------
 "  Load Once: {{{1
 if &cp || exists("g:loaded_RltvNmbr")
  finish
 endif
-let g:loaded_RltvNmbr = "v1c"
+let g:loaded_RltvNmbr = "v2"
 if !has("signs")
  echoerr 'Sorry, your vim is missing +signs; use  "configure --with-features=huge" , recompile, and install'
+ finish
+endif
+if !has("syntax")
+ echoerr 'Sorry, your vim is missing +syntax; use  "configure --with-features=huge" , recompile, and install'
  finish
 endif
 let s:keepcpo= &cpo
@@ -19,6 +24,9 @@ set cpo&vim
 " ---------------------------------------------------------------------
 "  Parameters: {{{1
 let s:RLTVNMBR= 2683
+if !exists("g:DrChipTopLvlMenu")
+ let g:DrChipTopLvlMenu= "DrChip."
+endif
 
 " =====================================================================
 "  Functions: {{{1
@@ -120,8 +128,8 @@ fun! RltvNmbr#RltvNmbrCtrl(start)
 
    if !exists("s:rltvnmbr_signs")
 	let s:rltvnmbr_signs= 1
-	hi default HL_RltvNmbr_Minus	ctermfg=red   ctermbg=black guifg=red   guibg=black
-	hi default HL_RltvNmbr_Positive	ctermfg=green ctermbg=black guifg=green guibg=black
+	hi default HL_RltvNmbr_Minus	gui=none,italic ctermfg=red   ctermbg=black guifg=red   guibg=black
+	hi default HL_RltvNmbr_Positive	gui=none,italic ctermfg=green ctermbg=black guifg=green guibg=black
     let L= 1
     while L <= 99
 	 exe "sign define RLTVN_M".L.' text='.string(L).' texthl=HL_RltvNmbr_Minus'
@@ -134,9 +142,15 @@ fun! RltvNmbr#RltvNmbrCtrl(start)
    call s:RltvNmbr(1)
    augroup RltvNmbrAutoCmd
 	au!
-    au CursorMoved * call <SID>RltvNmbr(2)
-	au ColorScheme * call <SID>ColorschemeLoaded()
+    au CursorMoved          * call <SID>RltvNmbr(2)
+	au VimResized           * call <SID>RltvNmbr(2)
+	au FileChangedShellPost * call <SID>RltvNmbr(2)
+	au CursorHold           * call <SID>RltvNmbr(2)
+	au FocusLost            * call <SID>RltvNmbr(2)
+	au ColorScheme          * call <SID>ColorschemeLoaded()
    augroup END
+   exe "menu ".g:DrChipTopLvlMenu."RltvNmbr.Stop<tab>:RltvNmbr!	:RltvNmbr!<cr>"
+   exe 'silent! unmenu '.g:DrChipTopLvlMenu.'RltvNmbr.Start'
 
   elseif !a:start && exists("s:rltvnmbr_{bufnr('%')}")
    unlet s:rltvnmbr_{bufnr("%")}
@@ -146,11 +160,33 @@ fun! RltvNmbr#RltvNmbrCtrl(start)
    augroup! RltvNmbrAutoCmd
    call s:RltvNmbr(3)
    exe "sign unplace ".s:RLTVNMBR." buffer=".bufnr("%")
+   exe "menu ".g:DrChipTopLvlMenu."RltvNmbr.Start<tab>:RltvNmbr	:RltvNmbr<cr>"
+   exe 'silent! unmenu '.g:DrChipTopLvlMenu.'RltvNmbr.Stop'
 
   else
    echo "RltvNmbr is already ".((a:start)? "enabled" : "off")
   endif
 "  call Dret("RltvNmbr#RltvNmbrCtrl")
+endfun
+
+" ---------------------------------------------------------------------
+" RltvNmbr#RltvNmbrToggle: supports the :RN command for quick relative-number-mode toggling {{{2
+"                          If the :RN command is already available, then it will not be overridden.
+fun! RltvNmbr#RltvNmbrToggle()
+"  call Dfunc("RltvNmbr#RltvNmbrToggle()")
+  
+  if !exists("s:RltvNmbrToggle_{bufnr('%')}")
+   let s:RltvNmbrToggle_{bufnr("%")}= 1
+  else
+   let s:RltvNmbrToggle_{bufnr("%")}= !s:RltvNmbrToggle_{bufnr("%")}
+  endif
+  if s:RltvNmbrToggle_{bufnr("%")}
+   RltvNmbr
+  else
+   RltvNmbr!
+  endif
+
+"  call Dret("RltvNmbr#RltvNmbrToggle")
 endfun
 
 " ---------------------------------------------------------------------
